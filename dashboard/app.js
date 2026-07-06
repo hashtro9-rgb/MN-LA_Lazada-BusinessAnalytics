@@ -10,6 +10,12 @@
   Chart.defaults.font.family = "'Helvetica Neue', Arial, sans-serif";
   Chart.defaults.color = INK;
   Chart.defaults.borderColor = GRID;
+  Chart.defaults.maintainAspectRatio = false;
+  Chart.defaults.animation = false;
+  Chart.defaults.plugins.legend.labels = Object.assign({}, Chart.defaults.plugins.legend.labels, { boxWidth: 10, font: { size: 10 } });
+  Chart.defaults.font.size = 10;
+
+  const charts = [];
 
   // ---------- helpers ----------
   const has = v => v !== null && v !== undefined && !Number.isNaN(v);
@@ -58,7 +64,7 @@
   const catByRevenue = [...categories].sort((a, b) => catMap[b].revenue - catMap[a].revenue);
 
   // ---------- Chart: avg price by category ----------
-  new Chart(document.getElementById('chart-price-by-category'), {
+  charts.push(new Chart(document.getElementById('chart-price-by-category'), {
     type: 'bar',
     data: {
       labels: catByAvgPrice,
@@ -71,16 +77,28 @@
     },
     options: {
       indexAxis: 'y',
-      plugins: { legend: { display: false } },
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: { title: ctx => catByAvgPrice[ctx[0].dataIndex] } }
+      },
       scales: {
         x: { grid: { color: GRID }, ticks: { callback: v => '₱' + v } },
-        y: { grid: { display: false } }
+        y: {
+          grid: { display: false },
+          ticks: {
+            font: { size: 10 },
+            callback: function (value) {
+              const label = catByAvgPrice[value];
+              return label.length > 18 ? label.slice(0, 16) + '…' : label;
+            }
+          }
+        }
       }
     }
-  });
+  }));
 
   // ---------- Chart: category mix (doughnut) ----------
-  new Chart(document.getElementById('chart-category-count'), {
+  charts.push(new Chart(document.getElementById('chart-category-count'), {
     type: 'doughnut',
     data: {
       labels: catByCount,
@@ -96,11 +114,11 @@
         legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 11 } } }
       }
     }
-  });
+  }));
 
   // ---------- Chart: best sellers ----------
   const topSellers = [...sold].sort((a, b) => b.sold - a.sold).slice(0, 10);
-  new Chart(document.getElementById('chart-best-sellers'), {
+  charts.push(new Chart(document.getElementById('chart-best-sellers'), {
     type: 'bar',
     data: {
       labels: topSellers.map(p => p.name.length > 28 ? p.name.slice(0, 26) + '…' : p.name),
@@ -119,7 +137,7 @@
         y: { grid: { display: false }, ticks: { font: { size: 11 } } }
       }
     }
-  });
+  }));
 
   // ---------- Chart: rating distribution ----------
   const ratingBuckets = { '1★': 0, '2★': 0, '3★': 0, '4★': 0, '5★': 0 };
@@ -128,7 +146,7 @@
     const key = `${Math.min(Math.max(r, 1), 5)}★`;
     ratingBuckets[key] += 1;
   });
-  new Chart(document.getElementById('chart-rating-dist'), {
+  charts.push(new Chart(document.getElementById('chart-rating-dist'), {
     type: 'bar',
     data: {
       labels: Object.keys(ratingBuckets),
@@ -146,10 +164,10 @@
         y: { grid: { color: GRID }, ticks: { stepSize: 1 } }
       }
     }
-  });
+  }));
 
   // ---------- Chart: revenue proxy by category ----------
-  new Chart(document.getElementById('chart-revenue-category'), {
+  charts.push(new Chart(document.getElementById('chart-revenue-category'), {
     type: 'bar',
     data: {
       labels: catByRevenue,
@@ -167,10 +185,10 @@
         y: { grid: { color: GRID }, ticks: { callback: v => '₱' + (v/1000) + 'k' } }
       }
     }
-  });
+  }));
 
   // ---------- Chart: price vs sold scatter ----------
-  new Chart(document.getElementById('chart-price-vs-sold'), {
+  charts.push(new Chart(document.getElementById('chart-price-vs-sold'), {
     type: 'scatter',
     data: {
       datasets: [{
@@ -198,7 +216,7 @@
         y: { title: { display: true, text: 'Units sold' }, grid: { color: GRID } }
       }
     }
-  });
+  }));
 
   // ---------- Chart: data coverage ----------
   const coverageFields = [
@@ -207,7 +225,7 @@
     { label: 'Review data', n: reviewed.length },
     { label: 'Discount data', n: PRODUCTS.filter(p => has(p.discount_pct)).length },
   ];
-  new Chart(document.getElementById('chart-coverage'), {
+  charts.push(new Chart(document.getElementById('chart-coverage'), {
     type: 'bar',
     data: {
       labels: coverageFields.map(f => f.label),
@@ -229,7 +247,7 @@
         y: { grid: { display: false } }
       }
     }
-  });
+  }));
 
   // ---------- Chart: price histogram ----------
   const bucketSize = 500;
@@ -240,7 +258,7 @@
     histBuckets[Math.floor(p.price / bucketSize)] += 1;
   });
   const histLabels = histBuckets.map((_, i) => `₱${i * bucketSize}–${(i + 1) * bucketSize}`);
-  new Chart(document.getElementById('chart-price-hist'), {
+  charts.push(new Chart(document.getElementById('chart-price-hist'), {
     type: 'bar',
     data: {
       labels: histLabels,
@@ -258,7 +276,7 @@
         y: { grid: { color: GRID }, ticks: { stepSize: 2 } }
       }
     }
-  });
+  }));
 
   // ---------- Flags ----------
   const flags = [];
@@ -321,4 +339,26 @@
     }
     return num / Math.sqrt(dx * dy);
   }
+
+  // ---------- Tab switching ----------
+  const tabBtns = document.querySelectorAll('.tab-btn');
+  const tabViews = document.querySelectorAll('.tab-view');
+
+  function activateTab(name) {
+    tabBtns.forEach(b => b.classList.toggle('active', b.dataset.tab === name));
+    tabViews.forEach(v => v.classList.toggle('active', v.id === 'tab-' + name));
+    // Charts inside a newly-visible tab need a resize pass since their
+    // containers had zero size while the tab was display:none.
+    requestAnimationFrame(() => {
+      charts.forEach(c => c.resize());
+    });
+  }
+
+  tabBtns.forEach(btn => {
+    btn.addEventListener('click', () => activateTab(btn.dataset.tab));
+  });
+
+  window.addEventListener('resize', () => {
+    charts.forEach(c => c.resize());
+  });
 })();

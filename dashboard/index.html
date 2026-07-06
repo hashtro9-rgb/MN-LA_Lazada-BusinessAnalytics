@@ -18,91 +18,118 @@
   <a class="portfolio-link" href="../portfolio/index.html">View Product Portfolio &rarr;</a>
 </header>
 
+<nav class="tab-bar" id="tab-bar">
+  <button class="tab-btn active" data-tab="overview">Overview</button>
+  <button class="tab-btn" data-tab="sales">Sales &amp; Pricing</button>
+  <button class="tab-btn" data-tab="ratings">Ratings &amp; Quality</button>
+  <button class="tab-btn" data-tab="categories">Categories</button>
+</nav>
+
 <main class="wrap">
 
-  <section class="kpi-row" id="kpi-row"></section>
+  <!-- ===================== TAB 1: OVERVIEW ===================== -->
+  <section class="tab-view active" id="tab-overview">
+    <section class="kpi-row" id="kpi-row"></section>
 
-  <section class="panel-grid">
-
-    <div class="panel panel-wide">
-      <div class="panel-head">
-        <h2>Average Price by Category</h2>
-        <p class="panel-note">Mean listed price across the 8 category groupings.</p>
+    <div class="panel-grid grid-2col">
+      <div class="panel">
+        <div class="panel-head">
+          <h2>Best Sellers</h2>
+          <p class="panel-note">Top products by lifetime units sold (only 12 of 51 SKUs report sales data).</p>
+        </div>
+        <div class="chart-box"><canvas id="chart-best-sellers"></canvas></div>
       </div>
-      <canvas id="chart-price-by-category" height="260"></canvas>
-    </div>
 
-    <div class="panel">
-      <div class="panel-head">
-        <h2>Category Mix</h2>
-        <p class="panel-note">Share of catalog by product count.</p>
+      <div class="panel panel-scroll-off">
+        <div class="panel-head">
+          <h2>Notable Patterns</h2>
+        </div>
+        <ul class="insight-list" id="insight-list"></ul>
       </div>
-      <canvas id="chart-category-count" height="260"></canvas>
     </div>
-
-    <div class="panel panel-wide">
-      <div class="panel-head">
-        <h2>Best Sellers</h2>
-        <p class="panel-note">Top products by lifetime units sold (only 12 of 51 SKUs report sales data).</p>
-      </div>
-      <canvas id="chart-best-sellers" height="260"></canvas>
-    </div>
-
-    <div class="panel">
-      <div class="panel-head">
-        <h2>Rating Distribution</h2>
-        <p class="panel-note">Star ratings among the 13 rated SKUs.</p>
-      </div>
-      <canvas id="chart-rating-dist" height="260"></canvas>
-    </div>
-
-    <div class="panel panel-wide">
-      <div class="panel-head">
-        <h2>Category Revenue Proxy</h2>
-        <p class="panel-note">Sum of (price &times; units sold) per category — a rough sales-value proxy, not true revenue.</p>
-      </div>
-      <canvas id="chart-revenue-category" height="260"></canvas>
-    </div>
-
-    <div class="panel">
-      <div class="panel-head">
-        <h2>Price vs. Units Sold</h2>
-        <p class="panel-note">Each point = one SKU with sales data (n=12).</p>
-      </div>
-      <canvas id="chart-price-vs-sold" height="260"></canvas>
-    </div>
-
-    <div class="panel">
-      <div class="panel-head">
-        <h2>Data Coverage</h2>
-        <p class="panel-note">Share of the 51 official SKUs with usable signal per field.</p>
-      </div>
-      <canvas id="chart-coverage" height="260"></canvas>
-    </div>
-
-    <div class="panel">
-      <div class="panel-head">
-        <h2>Price Distribution</h2>
-        <p class="panel-note">Histogram of listed prices (&#8369;).</p>
-      </div>
-      <canvas id="chart-price-hist" height="260"></canvas>
-    </div>
-
   </section>
 
-  <section class="panel panel-full">
-    <div class="panel-head">
-      <h2>Flagged Products</h2>
-      <p class="panel-note">Low-rating or low-review-count SKUs worth a second look, plus a discount-data note.</p>
+  <!-- ===================== TAB 2: SALES & PRICING ===================== -->
+  <section class="tab-view" id="tab-sales">
+    <div class="panel-grid grid-3col">
+      <div class="panel">
+        <div class="panel-head">
+          <h2>Average Price by Category</h2>
+          <p class="panel-note">Mean listed price across the 8 category groupings.</p>
+        </div>
+        <div class="chart-box"><canvas id="chart-price-by-category"></canvas></div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <h2>Price vs. Units Sold</h2>
+          <p class="panel-note">Each point = one SKU with sales data (n=12).</p>
+        </div>
+        <div class="chart-box"><canvas id="chart-price-vs-sold"></canvas></div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <h2>Price Distribution</h2>
+          <p class="panel-note">Histogram of listed prices (&#8369;).</p>
+        </div>
+        <div class="chart-box"><canvas id="chart-price-hist"></canvas></div>
+      </div>
     </div>
-    <div class="flag-grid" id="flag-grid"></div>
+
+    <div class="panel panel-note-strip">
+      <p class="panel-note strip-note">Discount data gap: 0 of 51 SKUs have <code>original_price</code> or <code>discount_pct</code> populated — every product is sold strictly at list price, with no promotional markdowns detected.</p>
+    </div>
   </section>
 
-  <section class="panel panel-full">
-    <div class="panel-head">
-      <h2>Notable Patterns</h2>
+  <!-- ===================== TAB 3: RATINGS & QUALITY ===================== -->
+  <section class="tab-view" id="tab-ratings">
+    <div class="panel-grid grid-2col-uneven">
+      <div class="panel">
+        <div class="panel-head">
+          <h2>Rating Distribution</h2>
+          <p class="panel-note">Star ratings among the 13 rated SKUs.</p>
+        </div>
+        <div class="chart-box"><canvas id="chart-rating-dist"></canvas></div>
+      </div>
+
+      <div class="panel panel-scroll-off">
+        <div class="panel-head">
+          <h2>Flagged Products</h2>
+          <p class="panel-note">Low-rating or low-review-count SKUs worth a second look.</p>
+        </div>
+        <div class="flag-grid" id="flag-grid"></div>
+      </div>
     </div>
-    <ul class="insight-list" id="insight-list"></ul>
+  </section>
+
+  <!-- ===================== TAB 4: CATEGORIES ===================== -->
+  <section class="tab-view" id="tab-categories">
+    <div class="panel-grid grid-3col">
+      <div class="panel">
+        <div class="panel-head">
+          <h2>Category Mix</h2>
+          <p class="panel-note">Share of catalog by product count.</p>
+        </div>
+        <div class="chart-box"><canvas id="chart-category-count"></canvas></div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <h2>Category Revenue Proxy</h2>
+          <p class="panel-note">Sum of (price &times; units sold) per category — a rough sales-value proxy.</p>
+        </div>
+        <div class="chart-box"><canvas id="chart-revenue-category"></canvas></div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <h2>Data Coverage</h2>
+          <p class="panel-note">Share of the 51 official SKUs with usable signal per field.</p>
+        </div>
+        <div class="chart-box"><canvas id="chart-coverage"></canvas></div>
+      </div>
+    </div>
   </section>
 
 </main>
