@@ -10,7 +10,7 @@
 ![Stack](https://img.shields.io/badge/stack-HTML%2FCSS%2FJS%20%2B%20Chart.js-black?style=flat-square)
 ![Build](https://img.shields.io/badge/build-no%20dependencies-black?style=flat-square)
 
-[Portfolio](portfolio/) · [Dashboard](dashboard/) · [Business Report](reports/business_analysis.md) · [Dataset](data/mnla_official_products.csv)
+[Portfolio (live)](https://hashtro9-rgb.github.io/MN-LA_Lazada-BusinessAnalytics/portfolio/) · [Dashboard (live)](https://hashtro9-rgb.github.io/MN-LA_Lazada-BusinessAnalytics/dashboard/) · [Business Report](reports/business_analysis.md) · [Dataset](data/mnla_official_products.csv)
 
 </div>
 
@@ -37,8 +37,8 @@
 
 | Deliverable | Purpose |
 |---|---|
-| 🗂️ [**Product Portfolio**](portfolio/) | Browsable catalog — search, filter by category, sort by price / rating / best-sellers |
-| 📊 [**Analytics Dashboard**](dashboard/) | KPIs and charts across sales, pricing, ratings, and categories — tabbed, fixed-viewport, zero scrolling |
+| 🗂️ [**Product Portfolio**](https://hashtro9-rgb.github.io/MN-LA_Lazada-BusinessAnalytics/portfolio/) | Browsable catalog — search, filter by category, sort by price / rating / best-sellers |
+| 📊 [**Analytics Dashboard**](https://hashtro9-rgb.github.io/MN-LA_Lazada-BusinessAnalytics/dashboard/) | KPIs and charts across sales, pricing, ratings, and categories — tabbed, fixed-viewport, zero scrolling |
 | 📄 [**Business Report**](reports/business_analysis.md) | Narrative findings, data caveats, and concrete recommendations |
 
 ---
@@ -162,8 +162,11 @@ cd dashboard && python -m http.server 8119   # → http://localhost:8119
 
 ## Publishing to GitHub Pages
 
-1. Repo **Settings → Pages** → source: `main` branch, root folder.
-2. Serve `portfolio/index.html` and `dashboard/index.html` directly, or wire up custom Pages routing for subpaths.
+Live now at:
+- Portfolio: https://hashtro9-rgb.github.io/MN-LA_Lazada-BusinessAnalytics/portfolio/
+- Dashboard: https://hashtro9-rgb.github.io/MN-LA_Lazada-BusinessAnalytics/dashboard/
+
+Configured via repo **Settings → Pages** → source: `main` branch, root folder.
 
 ---
 
