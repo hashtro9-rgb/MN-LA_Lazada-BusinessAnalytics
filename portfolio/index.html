@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MN+LA — Product Portfolio</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="logo-box">MN<span class="plus">+</span>LA</div>
+  <div class="header-text">
+    <h1>Product Portfolio</h1>
+    <p class="subtitle">Official catalog · <span id="count-label"></span> pieces</p>
+  </div>
+</header>
+
+<div class="controls">
+  <input id="search" type="text" placeholder="Search products…" />
+  <select id="category-filter">
+    <option value="">All categories</option>
+  </select>
+  <select id="sort-by">
+    <option value="default">Sort: Default</option>
+    <option value="price-asc">Price: Low to High</option>
+    <option value="price-desc">Price: High to Low</option>
+    <option value="rating-desc">Rating: High to Low</option>
+    <option value="sold-desc">Best Sellers</option>
+  </select>
+</div>
+
+<main id="grid" class="grid"></main>
+
+<footer class="site-footer">
+  <p>MN+LA — Manila meets LA. Data sourced from official Lazada storefront.</p>
+</footer>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
