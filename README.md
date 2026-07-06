@@ -174,3 +174,4 @@ Data was collected via a Lazada Philippines scraper against MN+LA's official sto
 <div align="center">
 <sub>MN+LA — Manila meets LA.</sub>
 </div>
+
