@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MN+LA — Lazada Business Analytics</title>
+<style>
+  :root { --ink: #111; --paper: #fff; --muted: #666; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    padding: 24px;
+  }
+  .logo-box {
+    border: 3px solid var(--ink);
+    padding: 22px 32px;
+    font-size: 40px;
+    font-weight: 700;
+    letter-spacing: 2px;
+  }
+  h1 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    text-align: center;
+  }
+  p.subtitle {
+    margin: 8px 0 0;
+    color: var(--muted);
+    font-size: 14px;
+    text-align: center;
+  }
+  .cards {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .card {
+    border: 2px solid var(--ink);
+    padding: 28px 32px;
+    width: 240px;
+    text-decoration: none;
+    color: var(--ink);
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+  .card:hover {
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .card .label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: inherit;
+    opacity: 0.6;
+  }
+  .card .title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-top: 8px;
+  }
+  .card .desc {
+    font-size: 12px;
+    margin-top: 10px;
+    line-height: 1.4;
+    opacity: 0.8;
+  }
+  footer {
+    font-size: 12px;
+    color: var(--muted);
+    text-align: center;
+  }
+  footer a { color: inherit; }
+</style>
+</head>
+<body>
+
+  <div class="logo-box">MN<span>+</span>LA</div>
+
+  <div>
+    <h1>Lazada Business Analytics</h1>
+    <p class="subtitle">Product catalog · analytics dashboard · business report — 51 official SKUs</p>
+  </div>
+
+  <div class="cards">
+    <a class="card" href="portfolio/">
+      <div class="label">Browse</div>
+      <div class="title">Product Portfolio</div>
+      <div class="desc">Searchable, filterable catalog of every official MN+LA listing.</div>
+    </a>
+    <a class="card" href="dashboard/">
+      <div class="label">Analyze</div>
+      <div class="title">Analytics Dashboard</div>
+      <div class="desc">KPIs, best sellers, pricing, ratings, and category performance.</div>
+    </a>
+  </div>
+
+  <footer>
+    <a href="https://github.com/hashtro9-rgb/MN-LA_Lazada-BusinessAnalytics">View source on GitHub</a>
+    · <a href="reports/business_analysis.md">Read the business report</a>
+  </footer>
+
+</body>
+</html>
